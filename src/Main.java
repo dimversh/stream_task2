@@ -15,7 +15,7 @@ public class Main {
         Collection<Person> persons = new ArrayList<>();
 
         //Заполнение массива жителей
-        for (int i = 0; i < 10_000_000; i++) {
+        for (int i = 0; i < 3000; i++) {
             persons.add(new Person(
                     names.get(new Random().nextInt(names.size())),
                     families.get(new Random().nextInt(families.size())),
@@ -38,13 +38,12 @@ public class Main {
         //Количество потенциальных работоспособных жителей
         List<Person> workersList = persons.stream()
                 .filter(person -> person.getEducation() == Education.HIGHER)
-                .filter(
-                        person -> person.getSex() == Sex.MAN && (person.getAge() >= 18 && person.getAge() < 65) ||
-                                person.getSex() == Sex.WOMAN && (person.getAge() >= 18 && person.getAge() < 60)
-                )
+                .filter(person -> person.getAge() >= 18)
+                .filter(person -> person.getAge() < (person.getSex() == Sex.MAN ? 65 : 60))
                 .sorted(Comparator.comparing(person -> person.getFamily()))
                 .collect(Collectors.toList());
-
+        
     }
+
 
 }
